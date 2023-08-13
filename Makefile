@@ -13,4 +13,7 @@ publish:
 package-install:
 	python3 -m pip install --force-reinstall dist/*.whl
 
-package-update: build publish package-install
+lint:
+	poetry run flake8 src
+
+package-update: lint build publish package-install
