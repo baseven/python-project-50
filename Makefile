@@ -1,6 +1,9 @@
 install:
 	poetry install
 
+test:
+	poetry run pytest
+
 gendiff:
 	poetry run gendiff
 
@@ -15,5 +18,10 @@ package-install:
 
 lint:
 	poetry run flake8 src
+
+selfcheck:
+	poetry check
+
+check: selfcheck test lint
 
 package-update: lint build publish package-install
