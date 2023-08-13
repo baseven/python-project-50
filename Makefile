@@ -28,3 +28,5 @@ selfcheck:
 check: selfcheck test lint
 
 package-update: lint build publish package-install
+
+.PHONY: install test lint selfcheck check build
