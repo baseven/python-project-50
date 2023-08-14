@@ -1,5 +1,5 @@
 import argparse
-import json
+from file_parser import get_file_parser
 
 
 def setup_parser():
@@ -14,10 +14,11 @@ def setup_parser():
     return args
 
 
-def generate_diff(file_path1, file_path2):
-    # TODO: Add contex manager for loading
-    file1 = json.load(open(file_path1))
-    file2 = json.load(open(file_path2))
+def generate_diff(file_path1, file_path2, file_format='JSON'):
+    # TODO: The data format must be determined based on the file extension
+    file_parser = get_file_parser(file_format)
+    file1 = file_parser(file_path1)
+    file2 = file_parser(file_path2)
     keys = sorted(list(set(file1.keys()) | set(file2.keys())))
 
     # TODO: Take out a function
