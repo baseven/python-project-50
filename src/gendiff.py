@@ -1,5 +1,6 @@
 import argparse
-from file_parser import get_file_parser
+from src.file_parser import get_file_parser
+from src.utils import generate_diff_line, get_file_extension
 
 
 def setup_parser():
@@ -14,25 +15,24 @@ def setup_parser():
     return args
 
 
-def generate_diff(file_path1, file_path2, file_format='JSON'):
-    # TODO: The data format must be determined based on the file extension
-    file_parser = get_file_parser(file_format)
-    file1 = file_parser(file_path1)
-    file2 = file_parser(file_path2)
-    keys = sorted(list(set(file1.keys()) | set(file2.keys())))
+def generate_diff(file_path1, file_path2):
+    file_extension = get_file_extension(file_path1)
+    file_parser = get_file_parser(file_extension)
 
-    # TODO: Take out a function
-    def get_diff_line(item):
-        if item not in file1:
-            return f'+ {item}: {file2.get(item)}'
-        elif item not in file2:
-            return f'- {item}: {file1.get(item)}'
-        elif file1.get(item) == file2.get(item):
-            return f'  {item}: {file1.get(item)}'
-        return f'- {item}: {file1.get(item)}/n+ {item}: {file2.get(item)}'
+    try:
+        file1 = file_parser(file_path1)
+        file2 = file_parser(file_path2)
+    except FileNotFoundError:
+        return "Один из файлов не найден"
 
-    diff_lines = [get_diff_line(item) for item in keys]
-    result = '{{/n{}/n}}'.format('/n'.join(diff_lines))
+    keys = sorted(set(file1.keys()) | set(file2.keys()))
+
+    indent = ' ' * 2
+    diff_lines = [
+        generate_diff_line(file1, file2, item, indent)
+        for item in keys
+    ]
+    result = '{\n' + '\n'.join(diff_lines) + '\n}'
     return result
 
 
