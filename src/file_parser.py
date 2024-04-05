@@ -7,8 +7,7 @@ def load_json(file_path):
         try:
             return json.load(file)
         except json.JSONDecodeError as e:
-            print(f"Error loading JSON from file '{file_path}': {e}")
-            return None
+            raise ValueError(f"Error loading JSON from file '{file_path}': {e}")
 
 
 def load_yaml(file_path):
@@ -16,16 +15,16 @@ def load_yaml(file_path):
         try:
             return yaml.safe_load(file)
         except yaml.YAMLError as e:
-            print(f"Error loading YAML from file '{file_path}': {e}")
-
-            return None
+            raise ValueError(f"Error loading YAML from file '{file_path}': {e}")
 
 
 def get_file_parser(file_extension):
-    if file_extension == 'json':
-        return lambda file_path: load_json(file_path)
-    elif file_extension in ['yaml', 'yml']:
-        return lambda file_path: load_yaml(file_path)
-    else:
-        print(f"Unsupported file extension: '{file_extension}'")
-        return None
+    parsers = {
+        'json': load_json,
+        'yaml': load_yaml,
+        'yml': load_yaml,
+    }
+    parser = parsers.get(file_extension.lower())
+    if not parser:
+        raise ValueError(f"Unsupported file extension: '{file_extension}'")
+    return parser
