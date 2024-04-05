@@ -5,7 +5,7 @@ test:
 	poetry run pytest
 
 test-coverage:
-	poetry run pytest --cov=src --cov-report xml
+	poetry run pytest --cov=gendiff --cov-report xml
 
 gendiff:
 	poetry run gendiff $(first_file) $(second_file)
@@ -32,7 +32,7 @@ package-install:
 	python3 -m pip install --force-reinstall dist/*.whl
 
 lint:
-	poetry run flake8 src
+	poetry run flake8 gendiff
 
 selfcheck:
 	poetry check

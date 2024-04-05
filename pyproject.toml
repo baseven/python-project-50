@@ -4,14 +4,14 @@ version = "0.1.0"
 description = ""
 authors = ["Vladislav Akashev <vlad.akashev.w@gmail.com>"]
 readme = "README.md"
-packages = [{include = "src"}]
+packages = [{include = "gendiff"}]
 
 [tool.poetry.dependencies]
 python = "^3.9"
 pyyaml = "^6.0.1"
 
 [tool.poetry.scripts]
-gendiff = "src.gendiff:main"
+gendiff = "gendiff.scripts.main:main"
 
 [tool.poetry.group.dev.dependencies]
 flake8 = "^6.1.0"
