@@ -6,7 +6,7 @@ from gendiff.formatters import get_formatter
 def generate_diff(
         first_file_path: str,
         second_file_path: str,
-        output_format: str,
+        output_format: str = 'stylish',
 ) -> str:
     first_file = parse_file(first_file_path)
     second_file = parse_file(second_file_path)
