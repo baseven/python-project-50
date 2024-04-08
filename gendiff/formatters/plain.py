@@ -11,14 +11,24 @@ templates = {
 }
 
 
+def modify_string(value):
+    return f"'{value}'"
+
+
+def modify_bool(value):
+    return 'true' if value else 'false'
+
+
 def modify_value(value):
     if value is None:
         return 'null'
+    elif isinstance(value, str):
+        return modify_string(value)
     elif isinstance(value, bool):
-        return 'true' if value else 'false'
-    elif isinstance(value, list) or isinstance(value, dict):
+        return modify_bool(value)
+    elif isinstance(value, (list, dict)):
         return '[complex value]'
-    return f"'{value}'"
+    return value
 
 
 def format_diff_line(diff: dict, path: str = '') -> str:
