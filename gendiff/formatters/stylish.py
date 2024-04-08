@@ -37,7 +37,7 @@ def format_diff_line(
     key = entry['key']
     diff_type = entry['type']
     indent = (spaces_count * depth - 2) * replacer
-
+    # TODO: rename diff_type from deleted to removed, from changed to updated
     if diff_type == 'added':
         value = stringify(
             value=entry["value"],

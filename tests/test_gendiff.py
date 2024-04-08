@@ -1,26 +1,36 @@
 from gendiff.diff_generator import generate_diff
-from tests.fixtures.diff import flat_result, nested_result
+from tests.fixtures.test_result import get_test_result
 
 
-def test_generate_diff_flat_json():
-    diff = generate_diff(first_file_path='tests/fixtures/JSON/flat/file1.json',
-                         second_file_path='tests/fixtures/JSON/flat/file2.json')
-    assert diff == flat_result
+def test_generate_diff_stylish():
+    test_result = get_test_result('stylish')
+    result_from_json = generate_diff(first_file_path='tests/fixtures/input_data/JSON/file1.json',
+                                     second_file_path='tests/fixtures/input_data/JSON/file2.json')
+    assert result_from_json == test_result
+    result_from_yaml = generate_diff(first_file_path='tests/fixtures/input_data/YAML/file1.yml',
+                                     second_file_path='tests/fixtures/input_data/YAML/file2.yml')
+    assert result_from_yaml == test_result
 
 
-def test_generate_diff_flat_yml():
-    diff = generate_diff(first_file_path='tests/fixtures/YAML/flat/file1.yml',
-                         second_file_path='tests/fixtures/YAML/flat/file2.yml')
-    assert diff == flat_result
+def test_generate_diff_plain():
+    test_result = get_test_result('plain')
+    result_from_json = generate_diff(first_file_path='tests/fixtures/input_data/JSON/file1.json',
+                                     second_file_path='tests/fixtures/input_data/JSON/file2.json',
+                                     output_format='plain')
+    assert result_from_json == test_result
+    result_from_yaml = generate_diff(first_file_path='tests/fixtures/input_data/YAML/file1.yml',
+                                     second_file_path='tests/fixtures/input_data/YAML/file2.yml',
+                                     output_format='plain')
+    assert result_from_yaml == test_result
 
 
-def test_generate_diff_nested_json():
-    diff = generate_diff(first_file_path='tests/fixtures/JSON/nested/file1.json',
-                         second_file_path='tests/fixtures/JSON/nested/file2.json')
-    assert diff == nested_result
-
-
-def test_generate_diff_nested_yml():
-    diff = generate_diff(first_file_path='tests/fixtures/YAML/nested/file1.yml',
-                         second_file_path='tests/fixtures/YAML/nested/file2.yml')
-    assert diff == nested_result
+def test_generate_diff_json():
+    test_result = get_test_result('json')
+    result_from_json = generate_diff(first_file_path='tests/fixtures/input_data/JSON/file1.json',
+                                     second_file_path='tests/fixtures/input_data/JSON/file2.json',
+                                     output_format='json')
+    assert result_from_json == test_result
+    result_from_yaml = generate_diff(first_file_path='tests/fixtures/input_data/YAML/file1.yml',
+                                     second_file_path='tests/fixtures/input_data/YAML/file2.yml',
+                                     output_format='json')
+    assert result_from_yaml == test_result
