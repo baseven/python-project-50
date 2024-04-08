@@ -11,7 +11,7 @@ result = """{
         }
         setting6: {
             doge: {
-              - wow:
+              - wow: 
               + wow: so much
             }
             key: value
@@ -41,4 +41,4 @@ result = """{
         }
         fee: 100500
     }
-}"""
+}"""  # noqa: W291
